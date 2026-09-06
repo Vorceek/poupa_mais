@@ -1,0 +1,278 @@
+<title>Poupa+ · Apresentação Final</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+  :root{
+    --petrol:#0D6E62; --deep:#08483F; --mint:#E4F2EF; --paper:#F6FAF9;
+    --ink:#1C2321; --muted:#5B6663; --amber:#E08B00; --red:#B3261E; --green:#1F7A3F;
+    --mono:'IBM Plex Mono',Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{
+    background:var(--deep); color:var(--ink);
+    font-family:Inter,system-ui,sans-serif; overflow:hidden;
+  }
+  .stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:2vmin}
+  .slide{
+    display:none; width:min(96vw,calc(96vh*16/9)); aspect-ratio:16/9;
+    background:var(--paper); border-radius:18px; padding:min(5vh,48px) min(6vw,64px);
+    flex-direction:column; justify-content:center; gap:min(2.6vh,22px);
+    box-shadow:0 24px 80px rgba(0,0,0,.45); overflow:hidden; position:relative;
+  }
+  .slide.on{display:flex}
+  .eyebrow{
+    font-family:var(--mono); font-size:clamp(11px,1.5vh,14px); font-weight:600;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--petrol);
+  }
+  h1{font-size:clamp(28px,7vh,64px);font-weight:800;line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
+  h2{font-size:clamp(22px,4.6vh,42px);font-weight:800;line-height:1.1;letter-spacing:-.015em;text-wrap:balance}
+  p,li{font-size:clamp(14px,2.3vh,20px);line-height:1.55}
+  .muted{color:var(--muted)}
+  .cols{display:grid;gap:min(2.4vw,24px)}
+  .c2{grid-template-columns:1fr 1fr}
+  .c3{grid-template-columns:1fr 1fr 1fr}
+  .tile{background:#fff;border:1px solid #d4e4e0;border-radius:14px;padding:min(2.6vh,22px)}
+  .tile h3{font-size:clamp(15px,2.5vh,21px);font-weight:700;margin-bottom:.35em}
+  .tile .k{font-family:var(--mono);font-size:clamp(10px,1.4vh,12px);font-weight:600;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+  .money{font-weight:700;font-variant-numeric:tabular-nums}
+  .logo{width:min(11vh,96px);height:min(11vh,96px);border-radius:24%;background:var(--petrol);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:min(5vh,44px)}
+  .bar{height:10px;border-radius:6px;background:var(--mint);overflow:hidden;margin-top:.5em}
+  .bar i{display:block;height:100%;border-radius:6px}
+  code,.code{font-family:var(--mono)}
+  .code{display:block;background:var(--deep);color:#cfe8e3;border-radius:12px;
+    padding:min(2.4vh,20px);font-size:clamp(11px,1.9vh,16px);line-height:1.6;overflow-x:auto;white-space:pre}
+  .code b{color:#ffd28a;font-weight:600}
+  ul.clean{list-style:none;display:flex;flex-direction:column;gap:.55em}
+  ul.clean li{padding-left:1.5em;position:relative}
+  ul.clean li::before{content:"—";position:absolute;left:0;color:var(--petrol);font-weight:700}
+  ul.check li::before{content:"✓";color:var(--green)}
+  .pill{display:inline-block;font-family:var(--mono);font-size:clamp(10px,1.5vh,13px);font-weight:600;
+    padding:.25em .7em;border-radius:99px;background:var(--mint);color:var(--deep)}
+  .pill.warn{background:#fbebd2;color:#8a5600}
+  .pill.bad{background:#f7dedc;color:var(--red)}
+  .flow{display:flex;align-items:center;gap:min(1.4vw,14px);flex-wrap:wrap}
+  .flow .step{background:#fff;border:2px solid var(--petrol);border-radius:12px;
+    padding:.6em .9em;font-weight:600;font-size:clamp(12px,2vh,17px)}
+  .flow .arr{color:var(--petrol);font-weight:800;font-size:clamp(14px,2.6vh,22px)}
+  .hud{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:14px;
+    padding:10px 18px;color:#bfe0da;font-family:var(--mono);font-size:12px;z-index:5;user-select:none}
+  .hud .track{flex:1;height:3px;background:rgba(255,255,255,.18);border-radius:2px;overflow:hidden}
+  .hud .track i{display:block;height:100%;background:#7fd0c4;width:0;transition:width .25s}
+  .hud button{background:none;border:1px solid rgba(255,255,255,.3);color:#bfe0da;border-radius:8px;
+    padding:4px 12px;font-family:var(--mono);font-size:13px;cursor:pointer}
+  .hud button:hover,.hud button:focus-visible{border-color:#7fd0c4;color:#fff;outline:none}
+  .footer-tag{position:absolute;bottom:min(2.6vh,22px);left:min(6vw,64px);right:min(6vw,64px);
+    display:flex;justify-content:space-between;font-family:var(--mono);
+    font-size:clamp(9px,1.35vh,12px);color:var(--muted);letter-spacing:.06em}
+  @media (max-width:700px){ .c2,.c3{grid-template-columns:1fr} .slide{aspect-ratio:auto;height:94vh;overflow-y:auto;justify-content:flex-start} }
+  @media (prefers-reduced-motion:no-preference){ .slide.on{animation:in .35s ease} @keyframes in{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}} }
+</style>
+
+<div class="stage">
+
+<!-- 1 · Capa -->
+<section class="slide on">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:min(2.4vh,20px)">
+    <div class="logo">P+</div>
+    <h1>Poupa+</h1>
+    <p class="muted" style="font-size:clamp(16px,2.8vh,24px)">Aplicativo de gestão de finanças pessoais<br>da concepção à versão 1 funcionando</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <span class="pill">Flutter · Dart 3</span><span class="pill">SQLite offline</span>
+      <span class="pill">MVVM · Provider</span><span class="pill">API REST</span>
+    </div>
+  </div>
+  <div class="footer-tag"><span>Vinicios Andrei Mensen · ADS</span><span>Desenvolvimento de Aplicações Mobile · Prof. Alysson Borges</span></div>
+</section>
+
+<!-- 2 · Problema -->
+<section class="slide">
+  <span class="eyebrow">01 · O problema</span>
+  <h2>As pessoas não desistem de controlar gastos por preguiça. Desistem pela fricção do registro.</h2>
+  <div class="cols c3">
+    <div class="tile"><h3>Planilhas</h3><p class="muted">Exigem disciplina e nunca estão à mão na hora da compra.</p></div>
+    <div class="tile"><h3>Apps de banco</h3><p class="muted">Mostram só o extrato daquela instituição.</p></div>
+    <div class="tile"><h3>Apps completos</h3><p class="muted">Complexos demais para quem está começando.</p></div>
+  </div>
+  <p><b>Persona:</b> Marina, 27, analista administrativa — <i>"meu salário some antes do fim do mês e eu não sei explicar em quê"</i>. Android intermediário, plano de dados limitado, uso frequente sem conexão.</p>
+</section>
+
+<!-- 3 · Tese -->
+<section class="slide">
+  <span class="eyebrow">02 · A tese do produto</span>
+  <h2>Registrar um gasto precisa levar <span style="color:var(--petrol)">menos de 10 segundos</span>.</h2>
+  <div class="flow">
+    <span class="step">＋ botão flutuante</span><span class="arr">→</span>
+    <span class="step">valor <span class="muted">(foco automático)</span></span><span class="arr">→</span>
+    <span class="step">categoria <span class="muted">(sugere a última)</span></span><span class="arr">→</span>
+    <span class="step" style="background:var(--petrol);color:#fff;border-color:var(--petrol)">salvar</span>
+  </div>
+  <p class="muted">Data já preenchida com hoje. Fluxo de 3 toques a partir de qualquer aba (RNF02 / US01). A partir desse registro, o app responde à pergunta real: <b style="color:var(--ink)">"dá para gastar agora?"</b></p>
+</section>
+
+<!-- 4 · O que foi entregue -->
+<section class="slide">
+  <span class="eyebrow">03 · Escopo entregue</span>
+  <h2>Todos os requisitos essenciais e importantes da concepção</h2>
+  <div class="cols c2">
+    <ul class="clean check">
+      <li><b>RF01–RF02</b> conta opcional, modo local e onboarding</li>
+      <li><b>RF03–RF05</b> lançamentos com edição e exclusão confirmada</li>
+      <li><b>RF06</b> categorias com ícone, cor e desativação (RN04)</li>
+      <li><b>RF07–RF08</b> painel do mês + extrato com busca e filtros</li>
+    </ul>
+    <ul class="clean check">
+      <li><b>RF09–RF10</b> orçamento por categoria com semáforo e alerta</li>
+      <li><b>RF11</b> metas com projeção de aporte mensal (RN06/RN07)</li>
+      <li><b>RF12</b> rosca por categoria + evolução de 6 meses</li>
+      <li><b>RF13–RF14</b> recorrências automáticas e exportação CSV</li>
+    </ul>
+  </div>
+  <p class="muted">Fora da versão 1, como planejado (MoSCoW): sincronização em nuvem (RF15) e biometria (RF16).</p>
+</section>
+
+<!-- 5 · Arquitetura -->
+<section class="slide">
+  <span class="eyebrow">04 · Arquitetura (RNF10)</span>
+  <h2>Camadas com MVVM — regra de negócio nunca na interface</h2>
+  <div class="code">views/          <b>9+ telas</b> — widgets Flutter, sem regra de negócio
+viewmodels/     <b>Provider/ChangeNotifier</b> — FinancasViewModel como fonte única de verdade
+data/           <b>repositórios</b> — SQLite (sqflite) + serviço da API de cotações
+models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus (testáveis)</div>
+  <div class="cols c2">
+    <div class="tile"><span class="k">Decisão</span><h3>Dinheiro em centavos inteiros</h3><p class="muted">0.1 + 0.2 ≠ 0.3 em ponto flutuante. Com <code>int</code> em centavos, somas de orçamento são exatas; formatação pt-BR só na borda.</p></div>
+    <div class="tile"><span class="k">Decisão</span><h3>Recarga atômica do mês</h3><p class="muted">Cada mutação recarrega saldo, extrato, orçamentos, metas e relatórios de uma vez — abas nunca ficam inconsistentes.</p></div>
+  </div>
+</section>
+
+<!-- 6 · Offline -->
+<section class="slide">
+  <span class="eyebrow">05 · Offline primeiro (RNF03 · RNF09)</span>
+  <h2>Tudo que é essencial funciona em modo avião</h2>
+  <div class="cols c2">
+    <div class="tile"><span class="k">SQLite transacional</span><h3>Aporte em meta = 1 transação</h3>
+      <p class="muted">Grava o aporte, lança a despesa espelho em <b>Poupança</b> (RN07) e conclui a meta se atingiu o alvo (RN06). Ou tudo, ou nada.</p></div>
+    <div class="tile"><span class="k">Regras no banco</span><h3>Constraints reforçam RN01–RN05</h3>
+      <p class="muted"><code>CHECK (valor &gt; 0)</code>, teto único por categoria, <code>ON DELETE CASCADE</code> — excluir a conta apaga tudo (LGPD, RNF05).</p></div>
+  </div>
+  <p class="muted">O orçamento reinicia sozinho todo mês (RN05): o consumo é sempre calculado sobre os lançamentos do mês corrente — sem job agendado para dar errado.</p>
+</section>
+
+<!-- 7 · API -->
+<section class="slide">
+  <span class="eyebrow">06 · Integração com API</span>
+  <h2>Cotações ao vivo, com plano B para ficar sem rede</h2>
+  <div class="code">GET https://economia.awesomeapi.com.br/json/last/<b>USD-BRL,EUR-BRL,BTC-BRL</b>
+
+{ "USDBRL": { "bid": "5.4321", "pctChange": "-0.35", ... } }   <b>← HTTPS · JSON · sem chave</b></div>
+  <div class="cols c3">
+    <div class="tile"><span class="k">1 · rede ok</span><p>Busca com timeout de 8 s, desserializa e <b>salva a resposta em cache</b>.</p></div>
+    <div class="tile"><span class="k">2 · sem rede</span><p>Card mostra o cache com indicador <i>offline</i> — a falha nunca degrada o app.</p></div>
+    <div class="tile"><span class="k">3 · sem nada</span><p>Sem rede e sem cache, o card simplesmente não aparece.</p></div>
+  </div>
+</section>
+
+<!-- 8 · UX -->
+<section class="slide">
+  <span class="eyebrow">07 · UX e design</span>
+  <h2>Cor sempre carrega informação — nunca decoração</h2>
+  <div class="cols c3">
+    <div class="tile"><h3>Alimentação</h3><p class="muted"><span class="money">R$ 780,00</span> / <span class="money">R$ 900,00</span> · 87%</p>
+      <div class="bar"><i style="width:87%;background:var(--amber)"></i></div>
+      <p style="margin-top:.5em"><span class="pill warn">âmbar aos 80%</span></p></div>
+    <div class="tile"><h3>Moradia</h3><p class="muted"><span class="money">R$ 1.100,00</span> / <span class="money">R$ 1.100,00</span> · 100%</p>
+      <div class="bar"><i style="width:100%;background:var(--red)"></i></div>
+      <p style="margin-top:.5em"><span class="pill bad">vermelho no teto</span></p></div>
+    <div class="tile"><h3>Transporte</h3><p class="muted"><span class="money">R$ 320,00</span> / <span class="money">R$ 400,00</span> · 80%… ainda não: 74%</p>
+      <div class="bar"><i style="width:74%;background:var(--petrol)"></i></div>
+      <p style="margin-top:.5em"><span class="pill">verde até 79%</span></p></div>
+  </div>
+  <ul class="clean">
+    <li>O aviso chega <b>antes</b> do estouro: SnackBar ao salvar + banner em Orçamentos (US03)</li>
+    <li>Valores e sinais ± acompanham as cores — nada depende só da cor · alvos ≥ 48 dp · contraste 5,9:1 (RNF08)</li>
+    <li>pt-BR de verdade: R$ com vírgula, dd/mm/aaaa, calendário traduzido (RNF12)</li>
+  </ul>
+</section>
+
+<!-- 9 · Qualidade -->
+<section class="slide">
+  <span class="eyebrow">08 · Qualidade e verificação</span>
+  <h2>Verificado, não só "funciona na minha máquina"</h2>
+  <div class="cols c3">
+    <div class="tile" style="text-align:center"><span class="k">flutter test</span>
+      <p style="font-size:clamp(30px,7vh,56px);font-weight:800;color:var(--green)">25</p><p class="muted">testes passando</p></div>
+    <div class="tile" style="text-align:center"><span class="k">flutter analyze</span>
+      <p style="font-size:clamp(30px,7vh,56px);font-weight:800;color:var(--green)">0</p><p class="muted">avisos</p></div>
+    <div class="tile" style="text-align:center"><span class="k">senhas</span>
+      <p style="font-size:clamp(18px,4vh,30px);font-weight:800;font-family:var(--mono);padding-top:.4em">SHA-256<span class="muted">+sal</span></p><p class="muted">nada em texto puro (RNF04)</p></div>
+  </div>
+  <p class="muted">Cobertura focada na camada de negócio: RN01/RN03 (validações), semáforo de orçamento, projeção de metas, recorrências — inclusive dia 31 em mês curto — formatação monetária e parse da API.</p>
+</section>
+
+<!-- 10 · Demo -->
+<section class="slide">
+  <span class="eyebrow">09 · Demonstração</span>
+  <h2>Roteiro da demo ao vivo</h2>
+  <ul class="clean" style="font-size:clamp(15px,2.6vh,22px)">
+    <li><b>1.</b> Entrar sem conta (modo local) → onboarding com renda e categorias</li>
+    <li><b>2.</b> Registrar um gasto em 3 toques — cronômetro na mão (meta: &lt; 10 s)</li>
+    <li><b>3.</b> Estourar de propósito o orçamento de Alimentação → alerta âmbar na hora</li>
+    <li><b>4.</b> Criar meta "Reserva de emergência" → aporte → despesa espelho em Poupança</li>
+    <li><b>5.</b> Modo avião ligado → tudo continua funcionando; cotações mostram o cache</li>
+  </ul>
+  <p class="muted">Plano B se a rede da sala falhar: o passo 5 vira o passo 1 — o app foi feito para isso.</p>
+</section>
+
+<!-- 11 · Futuro -->
+<section class="slide">
+  <span class="eyebrow">10 · Próximos passos</span>
+  <h2>A arquitetura já deixou as portas abertas</h2>
+  <ul class="clean">
+    <li><b>RF15 · Nuvem</b> — o contrato de repositório isola a persistência; trocar SQLite por backend não toca as telas</li>
+    <li><b>RF16 · Biometria</b> — recurso nativo via plugin, sem mudança estrutural</li>
+    <li><b>Notificações de sistema</b> — hoje o alerta de orçamento é visual, dentro do app</li>
+    <li><b>iOS</b> — mesma base de código, build via CI em nuvem (sem macOS local)</li>
+  </ul>
+</section>
+
+<!-- 12 · Fim -->
+<section class="slide">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:min(2.2vh,18px)">
+    <div class="logo">P+</div>
+    <h2>Obrigado!</h2>
+    <p class="muted" style="max-width:34em">Código-fonte, relatório técnico e documento de concepção estão no repositório do projeto no GitHub.</p>
+    <p class="code" style="display:inline-block">git clone &lt;repo&gt; &amp;&amp; flutter run</p>
+  </div>
+  <div class="footer-tag"><span>Poupa+ · versão 1.0.0</span><span>Vinicios Andrei Mensen · 2026</span></div>
+</section>
+
+</div>
+
+<div class="hud">
+  <button id="prev" aria-label="Slide anterior">←</button>
+  <button id="next" aria-label="Próximo slide">→</button>
+  <div class="track"><i id="pbar"></i></div>
+  <span id="count">1 / 12</span>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];let i=0;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,j)=>s.classList.toggle('on',j===i));
+    document.getElementById('count').textContent=(i+1)+' / '+slides.length;
+    document.getElementById('pbar').style.width=((i+1)/slides.length*100)+'%';
+  }
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1);}
+    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1);}
+    if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+  });
+  let x0=null;
+  addEventListener('touchstart',e=>x0=e.touches[0].clientX);
+  addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>48)show(i+(dx<0?1:-1));x0=null;});
+  show(0);
+</script>
