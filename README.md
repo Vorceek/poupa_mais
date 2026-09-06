@@ -1,6 +1,6 @@
 # Poupa+
 
-Aplicativo de gestão de finanças pessoais desenvolvido para a disciplina de Desenvolvimento de Aplicações Mobile (turma 28743, EAD54-12), a partir do documento de concepção, requisitos e prototipação da Atividade 1 (disponível em `docs/`).
+Aplicativo de gestão de finanças pessoais desenvolvido para a disciplina de Desenvolvimento de Aplicações Mobile (turma 28743, EAD54-12), a partir do documento de concepção, requisitos e prototipação da Atividade 1.
 
 A ideia central do projeto: registrar um gasto precisa levar menos de dez segundos, senão a pessoa abandona o controle financeiro em poucas semanas.
 
@@ -72,9 +72,7 @@ Para gerar o APK de depuração: `flutter build apk --debug` (sai em `build/app/
 
 ## Documentação
 
-- `docs/RELATORIO_TECNICO.md`: relatório técnico com o processo de desenvolvimento, as escolhas feitas e as soluções adotadas
-- `docs/Concepcao_Requisitos_Prototipacao.pdf`: documento da Atividade 1 (requisitos, matriz de decisão da plataforma e wireframes)
-- `docs/apresentacao.html`: slides da apresentação final
+O relatório técnico, o documento de concepção da Atividade 1 e a apresentação final são entregues junto com este repositório.
 
 ## Licença
 
