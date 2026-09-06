@@ -72,7 +72,8 @@ Para gerar o APK de depuração: `flutter build apk --debug` (sai em `build/app/
 
 ## Documentação
 
-O relatório técnico, o documento de concepção da Atividade 1 e a apresentação final são entregues junto com este repositório.
+- [Relatório técnico.pdf](Relatório%20técnico.pdf): processo de desenvolvimento, escolhas feitas e soluções adotadas
+- [base_projeto.pdf](base_projeto.pdf): documento de concepção, requisitos e prototipação da Atividade 1
 
 ## Licença
 
