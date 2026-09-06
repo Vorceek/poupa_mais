@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Relatório Técnico do Poupa+</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    color: #1C2321; font-size: 10.5pt; line-height: 1.55; margin: 0;
+  }
+  h1 { font-size: 20pt; color: #08483F; margin: 0 0 2mm; }
+  h2 {
+    font-size: 13.5pt; color: #08483F; border-bottom: 2.5px solid #0D6E62;
+    padding-bottom: 1.5mm; margin: 9mm 0 4mm; page-break-after: avoid;
+  }
+  h3 { font-size: 11.5pt; color: #0D6E62; margin: 6mm 0 2.5mm; page-break-after: avoid; }
+  p { margin: 0 0 3mm; text-align: justify; }
+  ul { margin: 0 0 3mm; padding-left: 6mm; }
+  li { margin-bottom: 1.5mm; text-align: justify; }
+  code {
+    font-family: Consolas, "Courier New", monospace; font-size: 9.5pt;
+    background: #E4F2EF; padding: 0 1.2mm; border-radius: 2px;
+  }
+  pre {
+    font-family: Consolas, "Courier New", monospace; font-size: 9pt;
+    background: #E4F2EF; border-left: 3px solid #0D6E62;
+    padding: 3mm 4mm; margin: 0 0 3mm; white-space: pre-wrap;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 4mm; page-break-inside: avoid; }
+  th {
+    background: #0D6E62; color: #fff; text-align: left; font-size: 9.5pt;
+    padding: 2mm 2.5mm;
+  }
+  td { border: 1px solid #cfe0dc; padding: 2mm 2.5mm; font-size: 9.5pt; vertical-align: top; }
+  tr:nth-child(even) td { background: #F4FAF8; }
+  .capa {
+    text-align: center; padding-top: 40mm;
+  }
+  .capa .logo {
+    width: 26mm; height: 26mm; background: #0D6E62; border-radius: 6mm;
+    color: #fff; font-size: 22pt; font-weight: 800; line-height: 26mm;
+    margin: 0 auto 6mm;
+  }
+  .capa .sub { color: #5B6663; font-size: 12pt; margin-bottom: 14mm; }
+  .capa table { width: 70%; margin: 12mm auto 0; }
+  .capa td { text-align: left; }
+  .capa td.k { width: 30%; font-weight: 700; color: #08483F; background: #E4F2EF; }
+  .quebra { page-break-before: always; }
+  .telas { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm 6mm; }
+  .tela { page-break-inside: avoid; text-align: center; }
+  .tela img {
+    width: 100%; max-width: 62mm; border: 1px solid #cfe0dc; border-radius: 3mm;
+  }
+  .tela .leg { font-size: 8.5pt; color: #5B6663; margin-top: 1.5mm; text-align: center; }
+  .rodape { color: #5B6663; font-size: 8.5pt; text-align: center; margin-top: 10mm; }
+</style>
+</head>
+<body>
+
+<div class="capa">
+  <div class="logo">P+</div>
+  <h1>Relatório Técnico do Poupa+</h1>
+  <div class="sub">Aplicativo de gestão de finanças pessoais<br>Implementação, escolhas técnicas e soluções adotadas</div>
+  <table>
+    <tr><td class="k">Aluno</td><td>Vinicios Andrei Mensen</td></tr>
+    <tr><td class="k">Curso</td><td>Análise e Desenvolvimento de Sistemas</td></tr>
+    <tr><td class="k">Professor</td><td>Alysson Borges</td></tr>
+    <tr><td class="k">Turma</td><td>28743 - DESENVOLVIMENTO MOBILE - EAD54-12</td></tr>
+    <tr><td class="k">Entrega</td><td>Implementação do aplicativo definido no Documento de Concepção, Requisitos e Prototipação (Atividade 1)</td></tr>
+  </table>
+</div>
+
+<div class="quebra"></div>
+
+<h2>1. Visão geral</h2>
+<p>O Poupa+ é um aplicativo de gestão de finanças pessoais construído sobre uma tese simples, definida na fase de concepção: registrar um gasto precisa levar menos de dez segundos. Esta entrega implementa a versão 1 do produto com todos os requisitos essenciais (RF01 a RF09), todos os importantes (RF10 a RF13) e um dos desejáveis (RF14, exportação CSV), além da integração com uma API pública de cotações para cumprir o critério de comunicação com servidores.</p>
+
+<h2>2. Processo de desenvolvimento</h2>
+<p>O desenvolvimento seguiu o cronograma da seção 5.3 do documento de concepção, adaptado ao formato individual:</p>
+<ul>
+  <li><b>Setup técnico:</b> criação do projeto Flutter (canal estável), estrutura de pastas em camadas e repositório Git desde o primeiro commit.</li>
+  <li><b>Núcleo (RF01 a RF08):</b> modelagem do banco SQLite conforme a seção 5.2 do documento (tabelas <code>usuario</code>, <code>categoria</code>, <code>lancamento</code>, <code>orcamento</code>, <code>meta</code>, <code>aporte</code>), autenticação local, CRUD de lançamentos, painel e extrato.</li>
+  <li><b>Orçamento e metas (RF09 a RF13):</b> tetos por categoria com semáforo, alertas visuais, metas com projeção de aporte mensal e recorrências automáticas.</li>
+  <li><b>Integração com API:</b> serviço de cotações com cache offline.</li>
+  <li><b>Testes e ajustes:</b> 25 testes de unidade e widget cobrindo as regras de negócio RN01 a RN07, a geração de recorrências, a formatação monetária pt-BR e o parse da API; <code>flutter analyze</code> sem avisos.</li>
+</ul>
+<p>A rastreabilidade entre requisito e tela definida na seção 4.4 do documento de concepção foi mantida: cada tela implementada referencia nos comentários do código os requisitos que atende.</p>
+
+<h2>3. Escolhas técnicas e justificativas</h2>
+
+<h3>3.1 Plataforma: Flutter com Android como alvo primário</h3>
+<p>A escolha foi feita na Atividade 1 por matriz de decisão ponderada (Flutter somou 126 pontos contra 108 do nativo Android, seção 3.3 do documento). Os fatores decisivos se confirmaram na prática:</p>
+<ul>
+  <li><b>Ambiente de testes sem custo:</b> todo o desenvolvimento e a demonstração acontecem no Android Emulator, disponível em Windows, sem exigência de hardware específico.</li>
+  <li><b>Produtividade:</b> o hot reload permitiu iterar as telas do app com ciclo de segundos, e o catálogo Material 3 cobriu a maior parte do sistema de design da seção 4.1.</li>
+  <li><b>Uma base de código:</b> o projeto compila para Android hoje e mantém o caminho aberto para iOS sem reescrita.</li>
+</ul>
+<p>O Android Studio permanece a IDE de referência do projeto (edição, emulador AVD e build), e o build Android usa Gradle (Kotlin DSL) como definido pelo template oficial do Flutter. Ou seja, as ferramentas estudadas na disciplina (Android Studio e Gradle) estão presentes na cadeia de build, com o Dart/Flutter como camada de aplicação, conforme decidido e fundamentado na Atividade 1.</p>
+
+<h3>3.2 Arquitetura: camadas com MVVM (RNF10)</h3>
+<pre>views (widgets)  ->  viewmodels (Provider/ChangeNotifier)  ->  repositórios  ->  SQLite / API</pre>
+<ul>
+  <li><b><code>core/</code>:</b> tema com o sistema de design da concepção (paleta #0D6E62 etc.), formatadores pt-BR e validadores das regras RN01 e RN03.</li>
+  <li><b><code>models/</code>:</b> entidades imutáveis com <code>toMap</code>/<code>fromMap</code>. O estado derivado (percentual de orçamento, projeção de meta) vive em classes de status (<code>OrcamentoStatus</code>, <code>MetaStatus</code>) puras e testáveis.</li>
+  <li><b><code>data/</code>:</b> um repositório por agregado. A interface exposta não depende do mecanismo de persistência, o que permite trocar o SQLite por um backend remoto (RF15 futuro) sem tocar nas views, como previsto na seção 5.1.</li>
+  <li><b><code>viewmodels/</code>:</b> <code>SessaoViewModel</code> (autenticação e onboarding), <code>FinancasViewModel</code> (fonte única de verdade dos dados do mês: após cada mutação recarrega resumo, extrato, orçamentos, metas e relatórios de uma vez, evitando estados inconsistentes entre abas), <code>CategoriaViewModel</code> e <code>CotacaoViewModel</code>.</li>
+</ul>
+<p>Uma decisão importante: todos os valores monetários circulam como inteiros em centavos. Ponto flutuante causa erros de arredondamento clássicos em dinheiro (0.1 + 0.2 não dá exatamente 0.3); com centavos inteiros, somas e comparações de orçamento são exatas. A conversão para exibição acontece só na borda (<code>Formatters.money</code>).</p>
+
+<h3>3.3 Persistência: SQLite com sqflite (RNF03, RNF09)</h3>
+<ul>
+  <li>Esquema com chaves estrangeiras ativas e <code>ON DELETE CASCADE</code>: excluir a conta remove lançamentos, orçamentos, metas e aportes em uma única operação, o que também implementa o direito de eliminação da LGPD (RNF05).</li>
+  <li>Constraints no banco reforçam as regras de negócio na camada mais baixa: <code>CHECK (valor &gt; 0)</code> (RN01) e <code>UNIQUE (usuario_id, categoria_id)</code> no orçamento.</li>
+  <li>Gravações críticas são transacionais (RNF09). O melhor exemplo é o aporte em meta: em uma única transação o app grava o aporte, lança a despesa espelho na categoria Poupança (RN07) e marca a meta como concluída se o alvo foi atingido (RN06). Ou tudo acontece, ou nada acontece.</li>
+  <li>O consumo do orçamento é sempre calculado sobre os lançamentos do mês corrente, então o reinício mensal (RN05) é automático, sem necessidade de job agendado.</li>
+</ul>
+
+<h3>3.4 Integração com API: AwesomeAPI de cotações</h3>
+<p>Critério do projeto: integração com alguma API para comunicação com servidores.</p>
+<ul>
+  <li><b>Endpoint:</b> <code>GET https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL</code> (HTTPS/TLS, atendendo o RNF04; API pública brasileira, sem chave).</li>
+  <li><b>Fluxo:</b> o <code>CotacaoService</code> faz a requisição com timeout de 8 segundos usando o pacote <code>http</code>, converte o JSON em objetos <code>Cotacao</code> e grava a resposta bruta em <code>shared_preferences</code>.</li>
+  <li><b>Comportamento offline:</b> se a rede falha, o serviço devolve o cache com a flag <code>doCache</code>, e o card do painel exibe um ícone de nuvem cortada com tooltip explicando que o valor é o último salvo. Sem rede e sem cache, o card apenas não aparece. A falha de rede nunca degrada as funções essenciais, em linha com o RNF03.</li>
+  <li>O parse é uma função estática pura, coberta por teste de unidade com resposta real de exemplo, incluindo o caso de resposta vazia.</li>
+</ul>
+<p>Por que essa API: cotações de moeda são informação financeira útil no contexto do app (o público-alvo sente o câmbio no preço de tudo), a API é estável, gratuita e sem cadastro, o que facilita a demonstração em sala, e o padrão de consumo REST com JSON e cache é exatamente a competência que o critério avalia.</p>
+
+<h3>3.5 UX aplicada (critério de design)</h3>
+<ul>
+  <li><b>Fluxo de 3 toques (RNF02/US01):</b> FAB visível em todas as abas; o formulário abre com o teclado numérico já focado no valor; categoria sugerida pelo último uso e data preenchida com hoje. O campo de valor formata centavos enquanto o usuário digita, no padrão dos apps bancários brasileiros.</li>
+  <li><b>Primeira dobra responde "posso gastar?" (US02):</b> saldo do mês em destaque tipográfico máximo, com receitas/despesas e barra agregada de orçamento logo abaixo, sem rolagem.</li>
+  <li><b>Cor sempre carrega informação (seção 4.1):</b> verde de receita, vermelho de despesa/estouro, âmbar de alerta em 80%. Valores absolutos acompanham as barras para a informação não depender só da cor (RNF08, daltonismo), e receitas e despesas também se distinguem pelo sinal.</li>
+  <li><b>Aviso antes do estouro, não depois (US03):</b> banner âmbar no topo de Orçamentos lista as categorias em atenção; ao salvar o lançamento que cruza 80% ou 100% do teto, um SnackBar avisa na hora.</li>
+  <li><b>Confirmação para ações destrutivas (RF05):</b> exclusão de lançamento (gesto de deslizar), meta, categoria e conta pedem confirmação, com a ação destrutiva em vermelho.</li>
+  <li><b>Acessibilidade (RNF08):</b> alvos de toque de no mínimo 48 dp (tema com <code>MaterialTapTargetSize.padded</code>), contraste da paleta verificado (#0D6E62 sobre branco fica em 5,9:1) e tooltips em todos os botões de ícone.</li>
+  <li><b>Localização (RNF12):</b> interface em pt-BR, moeda R$ com vírgula decimal, datas dd/mm/aaaa e seletor de datas do Material traduzido via <code>flutter_localizations</code>.</li>
+</ul>
+
+<h3>3.6 Segurança e privacidade (RNF04, RNF05)</h3>
+<ul>
+  <li>Senhas com SHA-256 e sal aleatório por usuário (pacote <code>crypto</code>); nenhuma senha em texto puro no banco.</li>
+  <li>Tráfego com o servidor exclusivamente por HTTPS.</li>
+  <li>Modo local sem conta: o usuário pode usar tudo sem informar nenhum dado pessoal.</li>
+  <li>Exclusão total: a tela de Perfil exclui conta e dados definitivamente, em cascata, atendendo o direito de eliminação da LGPD.</li>
+</ul>
+
+<h2>4. Soluções para problemas encontrados</h2>
+<table>
+  <tr><th style="width:42%">Problema</th><th>Solução adotada</th></tr>
+  <tr><td>Notificações locais (RF10) exigem plugin com configuração nativa extra (desugaring do Gradle), o que fragiliza o build em outras máquinas</td><td>O alerta de orçamento virou feedback visual imediato em três pontos (SnackBar ao salvar, banner na tela de Orçamentos, barra agregada no painel), o que cumpre a história US03 (avisar antes do estouro) e é demonstrável em sala; a notificação de sistema ficou como evolução</td></tr>
+  <tr><td>Recorrências (RF13) precisariam de agendamento em background</td><td>Geração na abertura do app: um método idempotente calcula as ocorrências pendentes desde o lançamento-modelo (com ajuste de dia 31 para o último dia de meses curtos) e insere só as que faltam; testes de unidade cobrem os casos de borda</td></tr>
+  <tr><td>Consistência entre abas após cada lançamento (saldo, orçamento e relatório mudam juntos)</td><td><code>FinancasViewModel</code> como fonte única de verdade: toda mutação dispara um recarregamento completo das projeções do mês</td></tr>
+  <tr><td>Erros de centavos em somas de dinheiro com <code>double</code></td><td>Valores como inteiros em centavos em todo o domínio; formatação pt-BR apenas na exibição</td></tr>
+  <tr><td>Categoria com histórico não pode ser excluída (RN04)</td><td>O repositório verifica lançamentos vinculados e decide entre <code>DELETE</code> e desativação (<code>ativa = 0</code>), informando o usuário do que aconteceu</td></tr>
+  <tr><td>API fora do ar durante a apresentação</td><td>Cache da última resposta com indicador de offline; o roteiro de demonstração não depende de rede</td></tr>
+  <tr><td>App travava na splash nativa no emulador x86_64 (primeiro frame nunca renderizava, sem erro no log)</td><td>Diagnóstico por logcat e screenshot via adb apontou o renderizador Impeller em OpenGLES como causa; relançar o app com <code>--ez enable-impeller false</code> confirmou. A correção foi desativar o Impeller no <code>AndroidManifest.xml</code> (meta-data <code>EnableImpeller = false</code>), voltando ao renderizador Skia, que funciona em qualquer AVD</td></tr>
+</table>
+
+<div class="quebra"></div>
+<h2>5. O aplicativo em execução</h2>
+<p>Telas capturadas no Android Emulator (Pixel, API 36), seguindo o roteiro de uso da persona: entrada em modo local, onboarding, lançamentos, orçamento com alerta, meta com aporte e relatórios.</p>
+<div class="telas">
+  <div class="tela"><img src="img/01_login.png" alt="Login"><div class="leg">Tela 1. Login, com o modo local sem conta (RF01)</div></div>
+  <div class="tela"><img src="img/02_onboarding.png" alt="Onboarding"><div class="leg">Tela 2. Onboarding com renda e categorias (RF02/RF06)</div></div>
+  <div class="tela"><img src="img/03_painel.png" alt="Painel"><div class="leg">Tela 3. Painel com saldo do mês (RN02), cotações da API e últimos lançamentos (RF07)</div></div>
+  <div class="tela"><img src="img/04_nova_transacao.png" alt="Nova transação"><div class="leg">Tela 4. Nova transação em 3 toques, valor em foco (RF03/RF04, RNF02)</div></div>
+  <div class="tela"><img src="img/05_extrato.png" alt="Extrato"><div class="leg">Tela 5. Extrato agrupado por dia, com o aporte como despesa de Poupança (RF08, RN07)</div></div>
+  <div class="tela"><img src="img/06_orcamentos.png" alt="Orçamentos"><div class="leg">Tela 6. Orçamentos com semáforo: âmbar aos 89% e banner de atenção (RF09/RF10)</div></div>
+  <div class="tela"><img src="img/07_metas.png" alt="Metas"><div class="leg">Tela 7. Meta com progresso de 40% e aporte mensal recalculado (RF11, RN06)</div></div>
+  <div class="tela"><img src="img/08_relatorios.png" alt="Relatórios"><div class="leg">Tela 8. Relatórios: rosca com total no centro e evolução mensal (RF12)</div></div>
+</div>
+
+<h2>6. Qualidade e verificação</h2>
+<ul>
+  <li><code>flutter analyze</code>: zero problemas.</li>
+  <li><code>flutter test</code>: 25 testes passando, cobrindo as regras de negócio RN01, RN03, RN05/RF09/RF10 (semáforo), RN06/RF11 (metas e projeção de aporte), RF13 (recorrências, inclusive meses curtos), formatação e parse monetário pt-BR, parse da API de cotações e testes de widget do componente de lançamento (sinais e cores de receita/despesa, RF04).</li>
+  <li><code>flutter build apk --debug</code>: build Gradle completo verificado (APK gerado em <code>build/app/outputs/flutter-apk/</code>).</li>
+  <li>A camada de negócio (classes de status, validadores, formatadores, geração de recorrência e parse da API) é o foco da cobertura, conforme o RNF10.</li>
+</ul>
+
+<h2>7. Como executar</h2>
+<ul>
+  <li>Instalar o Flutter (canal estável) e o Android Studio com um AVD (ex.: Pixel 6, API 34 ou superior).</li>
+  <li><code>flutter pub get</code></li>
+  <li><code>flutter run</code> com o emulador aberto (ou <code>flutter build apk --debug</code> para gerar o APK).</li>
+</ul>
+
+<h2>8. Limitações e evolução futura</h2>
+<ul>
+  <li>RF15 (sincronização em nuvem) e RF16 (biometria) são desejáveis e ficaram fora desta versão, como previsto na priorização MoSCoW; a arquitetura de repositórios já isola o ponto de troca da persistência.</li>
+  <li>Notificações de sistema para os alertas de orçamento (hoje o alerta é visual, dentro do app).</li>
+  <li>Recuperação de senha por e-mail exige backend; no modo atual (banco local), a conta é recuperável apenas no aparelho.</li>
+  <li>Build iOS a partir da mesma base, via integração contínua em nuvem (sem macOS local).</li>
+</ul>
+
+<h2>9. Conclusão</h2>
+<p>A versão 1 do Poupa+ implementa o escopo essencial e importante definido na concepção, com arquitetura em camadas testável, operação totalmente offline, integração real com API pública e a experiência de registro em 3 toques que motivou o produto. O código está organizado para receber as evoluções mapeadas sem retrabalho estrutural.</p>
+
+<div class="rodape">Relatório Técnico do Poupa+ · Vinicios Andrei Mensen · Desenvolvimento de Aplicações Mobile</div>
+
+</body>
+</html>

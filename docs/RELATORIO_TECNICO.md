@@ -93,26 +93,41 @@ Por que essa API: cotações de moeda são informação financeira útil no cont
 | API fora do ar durante a apresentação | Cache da última resposta com indicador de offline; o roteiro de demonstração não depende de rede |
 | App travava na splash nativa no emulador x86_64 (primeiro frame nunca renderizava, sem erro no log) | Diagnóstico por logcat e screenshot via adb apontou o renderizador Impeller em OpenGLES como causa; relançar o app com `--ez enable-impeller false` confirmou. A correção foi desativar o Impeller no `AndroidManifest.xml` (meta-data `EnableImpeller = false`), voltando ao renderizador Skia, que funciona em qualquer AVD |
 
-## 5. Qualidade e verificação
+## 5. O aplicativo em execução
+
+Telas capturadas no Android Emulator (Pixel, API 36), seguindo o roteiro de uso da persona: entrada em modo local, onboarding, lançamentos, orçamento com alerta, meta com aporte e relatórios.
+
+| | |
+|---|---|
+| ![Login](img/01_login.png) | ![Onboarding](img/02_onboarding.png) |
+| Tela 1. Login, com o modo local sem conta (RF01) | Tela 2. Onboarding com renda e categorias (RF02/RF06) |
+| ![Painel](img/03_painel.png) | ![Nova transação](img/04_nova_transacao.png) |
+| Tela 3. Painel com saldo do mês (RN02), cotações da API e últimos lançamentos (RF07) | Tela 4. Nova transação em 3 toques, valor em foco (RF03/RF04, RNF02) |
+| ![Extrato](img/05_extrato.png) | ![Orçamentos](img/06_orcamentos.png) |
+| Tela 5. Extrato agrupado por dia, com o aporte lançado como despesa de Poupança (RF08, RN07) | Tela 6. Orçamentos com semáforo: âmbar aos 89% e banner de atenção (RF09/RF10) |
+| ![Metas](img/07_metas.png) | ![Relatórios](img/08_relatorios.png) |
+| Tela 7. Meta com progresso de 40% e aporte mensal recalculado (RF11, RN06) | Tela 8. Relatórios: rosca com total no centro e evolução mensal (RF12) |
+
+## 6. Qualidade e verificação
 
 - `flutter analyze`: zero problemas.
 - `flutter test`: 25 testes passando, cobrindo as regras de negócio RN01, RN03, RN05/RF09/RF10 (semáforo), RN06/RF11 (metas e projeção de aporte), RF13 (recorrências, inclusive meses curtos), formatação e parse monetário pt-BR, parse da API de cotações e testes de widget do componente de lançamento (sinais e cores de receita/despesa, RF04).
 - `flutter build apk --debug`: build Gradle completo verificado (APK gerado em `build/app/outputs/flutter-apk/`).
 - A camada de negócio (classes de status, validadores, formatadores, geração de recorrência e parse da API) é o foco da cobertura, conforme o RNF10.
 
-## 6. Como executar
+## 7. Como executar
 
 1. Instalar o Flutter (canal estável) e o Android Studio com um AVD (ex.: Pixel 6, API 34 ou superior).
 2. `flutter pub get`
 3. `flutter run` com o emulador aberto (ou `flutter build apk --debug` para gerar o APK).
 
-## 7. Limitações e evolução futura
+## 8. Limitações e evolução futura
 
 - RF15 (sincronização em nuvem) e RF16 (biometria) são desejáveis e ficaram fora desta versão, como previsto na priorização MoSCoW; a arquitetura de repositórios já isola o ponto de troca da persistência.
 - Notificações de sistema para os alertas de orçamento (hoje o alerta é visual, dentro do app).
 - Recuperação de senha por e-mail exige backend; no modo atual (banco local), a conta é recuperável apenas no aparelho.
 - Build iOS a partir da mesma base, via integração contínua em nuvem (sem macOS local).
 
-## 8. Conclusão
+## 9. Conclusão
 
 A versão 1 do Poupa+ implementa o escopo essencial e importante definido na concepção, com arquitetura em camadas testável, operação totalmente offline, integração real com API pública e a experiência de registro em 3 toques que motivou o produto. O código está organizado para receber as evoluções mapeadas sem retrabalho estrutural.

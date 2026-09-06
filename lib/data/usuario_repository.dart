@@ -67,7 +67,7 @@ class UsuarioRepository {
     final rows = await db.query('usuario', where: 'modo_local = 1', limit: 1);
     if (rows.isNotEmpty) return Usuario.fromMap(rows.first);
     final usuario = Usuario(
-      nome: 'Uso local',
+      nome: 'Visitante',
       criadoEm: DateTime.now(),
       modoLocal: true,
     );
