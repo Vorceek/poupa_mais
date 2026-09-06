@@ -96,6 +96,7 @@ Justificativa da escolha: cotações de moeda são informação financeira genui
 ## 5. Qualidade e verificação
 
 - **`flutter analyze`:** zero problemas.
+- **`flutter build apk --debug`:** build Gradle completo verificado (APK gerado em `build/app/outputs/flutter-apk/`).
 - **`flutter test`:** 25 testes passando — regras de negócio RN01, RN03, RN05/RF09/RF10 (semáforo), RN06/RF11 (metas e projeção de aporte), RF13 (recorrências, incluindo meses curtos), formatação/parse monetário pt_BR e parse da API de cotações, além de testes de widget do componente de lançamento (sinais e cores de receita/despesa — RF04).
 - A camada de negócio (models de status, validadores, formatadores, geração de recorrência, parse da API) é o foco da cobertura, conforme o RNF10.
 
