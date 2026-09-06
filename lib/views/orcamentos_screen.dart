@@ -7,8 +7,8 @@ import '../core/formatters.dart';
 import '../models/orcamento.dart';
 import '../viewmodels/financas_viewmodel.dart';
 
-/// Tela 6 do protótipo (RF09, RF10, US03): teto por categoria com semáforo —
-/// verde até 79%, âmbar de 80% a 99%, vermelho ao atingir o teto. O aviso
+/// Tela 6 do protótipo (RF09, RF10, US03): teto por categoria com semáforo
+/// (verde até 79%, âmbar de 80% a 99%, vermelho ao atingir o teto). O aviso
 /// aparece antes do estouro, e os valores absolutos acompanham a barra para
 /// a informação não depender só da cor (RNF08).
 class OrcamentosScreen extends StatelessWidget {

@@ -212,7 +212,7 @@ class _MetaCard extends StatelessWidget {
                   label: const Text('Adicionar aporte'),
                 ),
               ] else
-                const Text('Meta concluída — parabéns!',
+                const Text('Meta concluída, parabéns!',
                     style: TextStyle(
                         fontSize: 13,
                         color: AppColors.income,

@@ -12,7 +12,7 @@ import '../models/orcamento.dart';
 
 /// ViewModel central das finanças: mantém o estado do mês corrente
 /// (resumo, extrato, orçamentos, metas e relatórios) e o recarrega de forma
-/// consistente após cada mutação. As regras RN01–RN07 são aplicadas aqui e
+/// consistente após cada mutação. As regras RN01-RN07 são aplicadas aqui e
 /// nos repositórios, nunca na camada de interface (RNF10).
 class FinancasViewModel extends ChangeNotifier {
   final LancamentoRepository _lancamentos;

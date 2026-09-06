@@ -45,8 +45,8 @@
   .code b{color:#ffd28a;font-weight:600}
   ul.clean{list-style:none;display:flex;flex-direction:column;gap:.55em}
   ul.clean li{padding-left:1.5em;position:relative}
-  ul.clean li::before{content:"—";position:absolute;left:0;color:var(--petrol);font-weight:700}
-  ul.check li::before{content:"✓";color:var(--green)}
+  ul.clean li::before{content:"•";position:absolute;left:0;color:var(--petrol);font-weight:700}
+  ul.check li::before{color:var(--green)}
   .pill{display:inline-block;font-family:var(--mono);font-size:clamp(10px,1.5vh,13px);font-weight:600;
     padding:.25em .7em;border-radius:99px;background:var(--mint);color:var(--deep)}
   .pill.warn{background:#fbebd2;color:#8a5600}
@@ -94,7 +94,7 @@
     <div class="tile"><h3>Apps de banco</h3><p class="muted">Mostram só o extrato daquela instituição.</p></div>
     <div class="tile"><h3>Apps completos</h3><p class="muted">Complexos demais para quem está começando.</p></div>
   </div>
-  <p><b>Persona:</b> Marina, 27, analista administrativa — <i>"meu salário some antes do fim do mês e eu não sei explicar em quê"</i>. Android intermediário, plano de dados limitado, uso frequente sem conexão.</p>
+  <p><b>Persona:</b> Marina, 27, analista administrativa. <i>"Meu salário some antes do fim do mês e eu não sei explicar em quê."</i> Android intermediário, plano de dados limitado, uso frequente sem conexão.</p>
 </section>
 
 <!-- 3 · Tese -->
@@ -116,16 +116,16 @@
   <h2>Todos os requisitos essenciais e importantes da concepção</h2>
   <div class="cols c2">
     <ul class="clean check">
-      <li><b>RF01–RF02</b> conta opcional, modo local e onboarding</li>
-      <li><b>RF03–RF05</b> lançamentos com edição e exclusão confirmada</li>
+      <li><b>RF01-RF02</b> conta opcional, modo local e onboarding</li>
+      <li><b>RF03-RF05</b> lançamentos com edição e exclusão confirmada</li>
       <li><b>RF06</b> categorias com ícone, cor e desativação (RN04)</li>
-      <li><b>RF07–RF08</b> painel do mês + extrato com busca e filtros</li>
+      <li><b>RF07-RF08</b> painel do mês + extrato com busca e filtros</li>
     </ul>
     <ul class="clean check">
-      <li><b>RF09–RF10</b> orçamento por categoria com semáforo e alerta</li>
+      <li><b>RF09-RF10</b> orçamento por categoria com semáforo e alerta</li>
       <li><b>RF11</b> metas com projeção de aporte mensal (RN06/RN07)</li>
       <li><b>RF12</b> rosca por categoria + evolução de 6 meses</li>
-      <li><b>RF13–RF14</b> recorrências automáticas e exportação CSV</li>
+      <li><b>RF13-RF14</b> recorrências automáticas e exportação CSV</li>
     </ul>
   </div>
   <p class="muted">Fora da versão 1, como planejado (MoSCoW): sincronização em nuvem (RF15) e biometria (RF16).</p>
@@ -134,14 +134,14 @@
 <!-- 5 · Arquitetura -->
 <section class="slide">
   <span class="eyebrow">04 · Arquitetura (RNF10)</span>
-  <h2>Camadas com MVVM — regra de negócio nunca na interface</h2>
-  <div class="code">views/          <b>9+ telas</b> — widgets Flutter, sem regra de negócio
-viewmodels/     <b>Provider/ChangeNotifier</b> — FinancasViewModel como fonte única de verdade
-data/           <b>repositórios</b> — SQLite (sqflite) + serviço da API de cotações
-models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus (testáveis)</div>
+  <h2>Camadas com MVVM: regra de negócio nunca na interface</h2>
+  <div class="code">views/          <b>telas</b>: widgets Flutter, sem regra de negócio
+viewmodels/     <b>Provider/ChangeNotifier</b>: FinancasViewModel como fonte única de verdade
+data/           <b>repositórios</b>: SQLite (sqflite) + serviço da API de cotações
+models/         <b>entidades e status puros</b>: OrcamentoStatus, MetaStatus (testáveis)</div>
   <div class="cols c2">
     <div class="tile"><span class="k">Decisão</span><h3>Dinheiro em centavos inteiros</h3><p class="muted">0.1 + 0.2 ≠ 0.3 em ponto flutuante. Com <code>int</code> em centavos, somas de orçamento são exatas; formatação pt-BR só na borda.</p></div>
-    <div class="tile"><span class="k">Decisão</span><h3>Recarga atômica do mês</h3><p class="muted">Cada mutação recarrega saldo, extrato, orçamentos, metas e relatórios de uma vez — abas nunca ficam inconsistentes.</p></div>
+    <div class="tile"><span class="k">Decisão</span><h3>Recarga atômica do mês</h3><p class="muted">Cada mutação recarrega saldo, extrato, orçamentos, metas e relatórios de uma vez, então as abas nunca ficam inconsistentes.</p></div>
   </div>
 </section>
 
@@ -152,10 +152,10 @@ models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus 
   <div class="cols c2">
     <div class="tile"><span class="k">SQLite transacional</span><h3>Aporte em meta = 1 transação</h3>
       <p class="muted">Grava o aporte, lança a despesa espelho em <b>Poupança</b> (RN07) e conclui a meta se atingiu o alvo (RN06). Ou tudo, ou nada.</p></div>
-    <div class="tile"><span class="k">Regras no banco</span><h3>Constraints reforçam RN01–RN05</h3>
-      <p class="muted"><code>CHECK (valor &gt; 0)</code>, teto único por categoria, <code>ON DELETE CASCADE</code> — excluir a conta apaga tudo (LGPD, RNF05).</p></div>
+    <div class="tile"><span class="k">Regras no banco</span><h3>Constraints reforçam RN01-RN05</h3>
+      <p class="muted"><code>CHECK (valor &gt; 0)</code>, teto único por categoria e <code>ON DELETE CASCADE</code>: excluir a conta apaga tudo (LGPD, RNF05).</p></div>
   </div>
-  <p class="muted">O orçamento reinicia sozinho todo mês (RN05): o consumo é sempre calculado sobre os lançamentos do mês corrente — sem job agendado para dar errado.</p>
+  <p class="muted">O orçamento reinicia sozinho todo mês (RN05), pois o consumo é sempre calculado sobre os lançamentos do mês corrente, sem job agendado para dar errado.</p>
 </section>
 
 <!-- 7 · API -->
@@ -164,10 +164,10 @@ models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus 
   <h2>Cotações ao vivo, com plano B para ficar sem rede</h2>
   <div class="code">GET https://economia.awesomeapi.com.br/json/last/<b>USD-BRL,EUR-BRL,BTC-BRL</b>
 
-{ "USDBRL": { "bid": "5.4321", "pctChange": "-0.35", ... } }   <b>← HTTPS · JSON · sem chave</b></div>
+{ "USDBRL": { "bid": "5.4321", "pctChange": "-0.35", ... } }   <b>(HTTPS, JSON, sem chave)</b></div>
   <div class="cols c3">
     <div class="tile"><span class="k">1 · rede ok</span><p>Busca com timeout de 8 s, desserializa e <b>salva a resposta em cache</b>.</p></div>
-    <div class="tile"><span class="k">2 · sem rede</span><p>Card mostra o cache com indicador <i>offline</i> — a falha nunca degrada o app.</p></div>
+    <div class="tile"><span class="k">2 · sem rede</span><p>Card mostra o cache com indicador <i>offline</i>. A falha nunca degrada o app.</p></div>
     <div class="tile"><span class="k">3 · sem nada</span><p>Sem rede e sem cache, o card simplesmente não aparece.</p></div>
   </div>
 </section>
@@ -175,7 +175,7 @@ models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus 
 <!-- 8 · UX -->
 <section class="slide">
   <span class="eyebrow">07 · UX e design</span>
-  <h2>Cor sempre carrega informação — nunca decoração</h2>
+  <h2>Cor sempre carrega informação, nunca decoração</h2>
   <div class="cols c3">
     <div class="tile"><h3>Alimentação</h3><p class="muted"><span class="money">R$ 780,00</span> / <span class="money">R$ 900,00</span> · 87%</p>
       <div class="bar"><i style="width:87%;background:var(--amber)"></i></div>
@@ -189,7 +189,7 @@ models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus 
   </div>
   <ul class="clean">
     <li>O aviso chega <b>antes</b> do estouro: SnackBar ao salvar + banner em Orçamentos (US03)</li>
-    <li>Valores e sinais ± acompanham as cores — nada depende só da cor · alvos ≥ 48 dp · contraste 5,9:1 (RNF08)</li>
+    <li>Valores e sinais ± acompanham as cores: nada depende só da cor · alvos ≥ 48 dp · contraste 5,9:1 (RNF08)</li>
     <li>pt-BR de verdade: R$ com vírgula, dd/mm/aaaa, calendário traduzido (RNF12)</li>
   </ul>
 </section>
@@ -206,7 +206,7 @@ models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus 
     <div class="tile" style="text-align:center"><span class="k">senhas</span>
       <p style="font-size:clamp(18px,4vh,30px);font-weight:800;font-family:var(--mono);padding-top:.4em">SHA-256<span class="muted">+sal</span></p><p class="muted">nada em texto puro (RNF04)</p></div>
   </div>
-  <p class="muted">Cobertura focada na camada de negócio: RN01/RN03 (validações), semáforo de orçamento, projeção de metas, recorrências — inclusive dia 31 em mês curto — formatação monetária e parse da API.</p>
+  <p class="muted">Cobertura focada na camada de negócio: RN01/RN03 (validações), semáforo de orçamento, projeção de metas, recorrências (inclusive dia 31 em mês curto), formatação monetária e parse da API.</p>
 </section>
 
 <!-- 10 · Demo -->
@@ -214,13 +214,13 @@ models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus 
   <span class="eyebrow">09 · Demonstração</span>
   <h2>Roteiro da demo ao vivo</h2>
   <ul class="clean" style="font-size:clamp(15px,2.6vh,22px)">
-    <li><b>1.</b> Entrar sem conta (modo local) → onboarding com renda e categorias</li>
-    <li><b>2.</b> Registrar um gasto em 3 toques — cronômetro na mão (meta: &lt; 10 s)</li>
-    <li><b>3.</b> Estourar de propósito o orçamento de Alimentação → alerta âmbar na hora</li>
-    <li><b>4.</b> Criar meta "Reserva de emergência" → aporte → despesa espelho em Poupança</li>
-    <li><b>5.</b> Modo avião ligado → tudo continua funcionando; cotações mostram o cache</li>
+    <li><b>1.</b> Entrar sem conta (modo local) e concluir o onboarding com renda e categorias</li>
+    <li><b>2.</b> Registrar um gasto em 3 toques, com cronômetro na mão (meta: &lt; 10 s)</li>
+    <li><b>3.</b> Estourar de propósito o orçamento de Alimentação e ver o alerta âmbar na hora</li>
+    <li><b>4.</b> Criar a meta "Reserva de emergência", registrar um aporte e mostrar a despesa espelho em Poupança</li>
+    <li><b>5.</b> Ligar o modo avião: tudo continua funcionando e as cotações mostram o cache</li>
   </ul>
-  <p class="muted">Plano B se a rede da sala falhar: o passo 5 vira o passo 1 — o app foi feito para isso.</p>
+  <p class="muted">Plano B se a rede da sala falhar: o passo 5 vira o passo 1, afinal o app foi feito para isso.</p>
 </section>
 
 <!-- 11 · Futuro -->
@@ -228,10 +228,10 @@ models/         <b>entidades + status puros</b> — OrcamentoStatus, MetaStatus 
   <span class="eyebrow">10 · Próximos passos</span>
   <h2>A arquitetura já deixou as portas abertas</h2>
   <ul class="clean">
-    <li><b>RF15 · Nuvem</b> — o contrato de repositório isola a persistência; trocar SQLite por backend não toca as telas</li>
-    <li><b>RF16 · Biometria</b> — recurso nativo via plugin, sem mudança estrutural</li>
-    <li><b>Notificações de sistema</b> — hoje o alerta de orçamento é visual, dentro do app</li>
-    <li><b>iOS</b> — mesma base de código, build via CI em nuvem (sem macOS local)</li>
+    <li><b>RF15 · Nuvem:</b> o contrato de repositório isola a persistência; trocar SQLite por backend não toca as telas</li>
+    <li><b>RF16 · Biometria:</b> recurso nativo via plugin, sem mudança estrutural</li>
+    <li><b>Notificações de sistema:</b> hoje o alerta de orçamento é visual, dentro do app</li>
+    <li><b>iOS:</b> mesma base de código, build via CI em nuvem (sem macOS local)</li>
   </ul>
 </section>
 

@@ -7,7 +7,7 @@ import '../models/usuario.dart';
 import 'database_helper.dart';
 
 /// RF01: cadastro, autenticação e modo local sem conta.
-/// RNF04: a senha nunca é gravada em texto puro — armazenamos SHA-256(sal+senha)
+/// RNF04: a senha nunca é gravada em texto puro; armazenamos SHA-256(sal+senha)
 /// com sal aleatório por usuário.
 class UsuarioRepository {
   final DatabaseHelper _dbHelper;
@@ -61,7 +61,7 @@ class UsuarioRepository {
     return usuario;
   }
 
-  /// Modo local sem conta (RF01): cria — ou reutiliza — um perfil local único.
+  /// Modo local sem conta (RF01): cria (ou reutiliza) um perfil local único.
   Future<Usuario> entrarModoLocal() async {
     final db = await _dbHelper.database;
     final rows = await db.query('usuario', where: 'modo_local = 1', limit: 1);

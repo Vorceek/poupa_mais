@@ -117,7 +117,7 @@ class PerfilScreen extends StatelessWidget {
           const SizedBox(height: 8),
           const Center(
             child: Text(
-              'Projeto acadêmico — Desenvolvimento de Aplicações Mobile',
+              'Projeto acadêmico da disciplina Desenvolvimento de Aplicações Mobile',
               style: TextStyle(color: AppColors.textMuted, fontSize: 12),
             ),
           ),

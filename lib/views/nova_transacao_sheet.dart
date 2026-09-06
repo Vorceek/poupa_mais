@@ -10,7 +10,7 @@ import '../viewmodels/financas_viewmodel.dart';
 import '../viewmodels/sessao_viewmodel.dart';
 
 /// Tela 4 do protótipo (RF03, RF04, RF13, US01): formulário de lançamento em
-/// 3 toques — valor (com foco automático) → categoria → salvar. A data vem
+/// 3 toques (valor com foco automático, categoria e salvar). A data vem
 /// preenchida com o dia corrente e a categoria sugere a última utilizada.
 class NovaTransacaoSheet extends StatefulWidget {
   final Lancamento? editar;

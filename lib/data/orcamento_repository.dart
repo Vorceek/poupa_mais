@@ -3,7 +3,7 @@ import 'database_helper.dart';
 
 /// RF09/RF10: teto de gasto mensal por categoria e consumo no mês corrente.
 /// RN05: o orçamento é sempre mensal e o consumo reinicia no primeiro dia de
-/// cada mês — o cálculo soma apenas os lançamentos do mês de referência.
+/// cada mês, já que o cálculo soma apenas os lançamentos do mês de referência.
 class OrcamentoRepository {
   final DatabaseHelper _dbHelper;
 

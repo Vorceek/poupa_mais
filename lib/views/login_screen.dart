@@ -8,7 +8,7 @@ import 'home_shell.dart';
 import 'onboarding_screen.dart';
 
 /// Tela 1 do protótipo (RF01): login, criação de conta e modo local sem
-/// cadastro — este último remove a barreira de entrada.
+/// cadastro, que remove a barreira de entrada.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

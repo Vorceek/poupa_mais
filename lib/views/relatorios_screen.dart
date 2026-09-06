@@ -8,8 +8,8 @@ import '../core/formatters.dart';
 import '../viewmodels/financas_viewmodel.dart';
 
 /// Tela 8 do protótipo (RF12, US04): gráfico de rosca com o total no centro
-/// e legenda ordenada por valor decrescente — indica onde cortar primeiro —
-/// e gráfico de barras com a evolução dos últimos seis meses.
+/// e legenda ordenada por valor decrescente (indica onde cortar primeiro),
+/// além do gráfico de barras com a evolução dos últimos seis meses.
 class RelatoriosScreen extends StatelessWidget {
   const RelatoriosScreen({super.key});
 

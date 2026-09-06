@@ -3,7 +3,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 /// Acesso único ao banco SQLite local (RNF03: operação 100% offline;
-/// RNF09: gravação transacional — nenhum lançamento é perdido em caso de
+/// RNF09: gravação transacional, ou seja, nenhum lançamento é perdido em caso de
 /// encerramento abrupto, pois o SQLite confirma cada escrita em transação).
 class DatabaseHelper {
   DatabaseHelper._();
