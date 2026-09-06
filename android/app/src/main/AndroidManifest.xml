@@ -32,6 +32,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- O Impeller em OpenGLES trava o primeiro frame em alguns emuladores
+             x86_64; usamos o renderizador clássico (Skia) para garantir a
+             execução em qualquer AVD. -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="false" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

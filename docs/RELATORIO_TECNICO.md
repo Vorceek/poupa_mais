@@ -91,6 +91,7 @@ Por que essa API: cotações de moeda são informação financeira útil no cont
 | Erros de centavos em somas de dinheiro com `double` | Valores como inteiros em centavos em todo o domínio; formatação pt-BR apenas na exibição |
 | Categoria com histórico não pode ser excluída (RN04) | O repositório verifica lançamentos vinculados e decide entre `DELETE` e desativação (`ativa = 0`), informando o usuário do que aconteceu |
 | API fora do ar durante a apresentação | Cache da última resposta com indicador de offline; o roteiro de demonstração não depende de rede |
+| App travava na splash nativa no emulador x86_64 (primeiro frame nunca renderizava, sem erro no log) | Diagnóstico por logcat e screenshot via adb apontou o renderizador Impeller em OpenGLES como causa; relançar o app com `--ez enable-impeller false` confirmou. A correção foi desativar o Impeller no `AndroidManifest.xml` (meta-data `EnableImpeller = false`), voltando ao renderizador Skia, que funciona em qualquer AVD |
 
 ## 5. Qualidade e verificação
 
